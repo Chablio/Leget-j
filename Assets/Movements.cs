@@ -6,9 +6,10 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class SimpleController : MonoBehaviour
 {
-    [SerializeField] private float walk = 0.000000000001f;
+    [SerializeField] private float walk = 15f;
     [SerializeField] private float gravity = 9.81f;
-    [SerializeField] private float run = 5f;
+    [SerializeField] private float run = 25f;
+    [SerializeField] private float Jump = 15f;
 
     private float realSpeed;
 
@@ -33,6 +34,7 @@ public class SimpleController : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
         bool wantRun = Input.GetButton("Run");
+        bool wantJump = Input.GetButtonDown("Jump");
 
         if (wantRun)
         {
@@ -60,6 +62,11 @@ public class SimpleController : MonoBehaviour
                 transform.forward = new Vector3(h, 0f, v);
             }
         }
+        // Jump
+        if (wantJump)
+        {
+            moveDirection.y = Jump;
+        }
 
         // Apply gravity
         moveDirection.y -= gravity * Time.deltaTime;
@@ -76,45 +83,5 @@ public class SimpleController : MonoBehaviour
             Vector3.down,                                               // ...pointing downwards...
             controller.bounds.extents.y + controller.skinWidth + 0.2f); // ... to the bottom of the controller.
     }
-
-
-    // jump funktion
-class Program
-{
-    static void Main()
-    {
-        Console.WriteLine("Press 'Space' to jump.");
-
-        while (true)
-        {
-            if (Console.KeyAvailable)
-            {
-                ConsoleKeyInfo key = Console.ReadKey();
-
-                if (key.Key == ConsoleKey.Spacebar)
-                {
-                    Jump();
-                }
-            }
-
-            System.Threading.Thread.Sleep(10);
-        }
-    }
-
-    static void Jump()
-    {
-        Console.WriteLine("Jumping!");
-    
-    }
-}
-
-
-
-
-
-
-
-
-
 
 }
