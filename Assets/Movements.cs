@@ -54,7 +54,9 @@ public class SimpleController : MonoBehaviour
         // Handle movement on the ground
         if (isGrounded)
         {
-            moveDirection = new Vector3(h, moveDirection.y, v).normalized * realSpeed;
+            float ySpeed = moveDirection.y;
+            moveDirection = new Vector3(h, 0, v).normalized * realSpeed;
+            moveDirection.y = ySpeed;
 
             // Face in the move direction
             if (h != 0 || v != 0)
